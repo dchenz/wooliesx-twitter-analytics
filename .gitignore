@@ -1,0 +1,21 @@
+# ignore python virtual environment
+bin
+include
+lib
+share
+*.cfg
+lib64
+
+# ignore .env file
+.env
+
+# ignore cache folder
+__pycache__
+
+# ignore cache
+api_cache
+
+# ignore script out-files
+users.json
+twitter_statuses
+analysis_results
