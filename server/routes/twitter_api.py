@@ -1,5 +1,4 @@
 import os
-
 import tweepy
 
 client_key = os.environ.get("TWITTER_CLIENT_KEY")
@@ -9,10 +8,12 @@ if client_key is None or secret_key is None:
     print("failed to get .env")
     exit(1)
 
+
 def get_twitter_client():
     auth = tweepy.OAuthHandler(client_key, secret_key)
     api = tweepy.API(auth, wait_on_rate_limit=True)
     return api
+
 
 def search_status_by_tags(api, tags):
 

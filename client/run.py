@@ -1,8 +1,6 @@
-import os
 import dotenv
-
-from src import (analysis, arguments, create_users, twitter_api, twitter_graph,
-                 utils)
+import os
+from src import analysis, arguments, create_users, twitter_api, twitter_graph, utils
 from src.australian import is_australian_location
 
 if __name__ == "__main__":
@@ -30,9 +28,11 @@ if __name__ == "__main__":
             os.mkdir("twitter_statuses")
         search_results = twitter_api.get_status_by_tags(args.tags)
         for tag, results in search_results.items():
-            australian_results = list(filter(lambda s: is_australian_location(s["user"]["location"]), results))
+            australian_results = list(
+                filter(lambda s: is_australian_location(s["user"]["location"]), results)
+            )
             filename = tag.replace(" ", "_").replace("#", "")
-            path = f'twitter_statuses/{filename}.json'
+            path = f"twitter_statuses/{filename}.json"
             utils.save_json(path, australian_results)
 
     elif args.mode == "keyword_sentiment":
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         if not os.path.isdir("analysis_results"):
             os.mkdir("analysis_results")
 
-        output_csv_filename = f'analysis_results/out_{utils.get_random_hex(8)}.csv'
+        output_csv_filename = f"analysis_results/out_{utils.get_random_hex(8)}.csv"
         output_csv = open(output_csv_filename, "w")
 
         csv_headers = [
@@ -56,7 +56,7 @@ if __name__ == "__main__":
             "Frequency",
             "Positive (%)",
             "Neutral (%)",
-            "Negative (%)"
+            "Negative (%)",
         ]
         output_csv.write(",".join(csv_headers) + "\n")
         for tag, entity in statuses_by_tag.items():
@@ -73,4 +73,3 @@ if __name__ == "__main__":
                     output_csv.write(",".join(output_csv_line) + "\n")
 
         print("Results saved:", output_csv_filename)
-

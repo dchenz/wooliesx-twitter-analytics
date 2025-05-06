@@ -2,12 +2,14 @@ from src import azure_api
 
 # Assign the results to the datatset
 
+
 def assign_status_keywords(statuses_by_tag):
     # Get keywords on all statuses
     for entity in statuses_by_tag.values():
         statuses_text = [s["text"] for s in entity["statuses"]]
         keywords = azure_api.get_keyword_analysis(statuses_text)
         entity["keyword"] = keywords
+
 
 def assign_status_sentiments(statuses_by_tag):
     # Get sentiment on all statuses
@@ -16,7 +18,9 @@ def assign_status_sentiments(statuses_by_tag):
         sentiments = azure_api.get_sentiment_analysis(statuses_text)
         entity["sentiment"] = sentiments
 
+
 # Group results
+
 
 def get_distinct_keywords(entity):
     keyword_results = entity["keyword"]
@@ -24,6 +28,7 @@ def get_distinct_keywords(entity):
     for keywords in keyword_results:
         distinct_words.update(keywords)
     return sorted(distinct_words)
+
 
 def get_average_sentiment_by_keyword(entity, keyword):
     keyword_results = entity["keyword"]
@@ -39,6 +44,7 @@ def get_average_sentiment_by_keyword(entity, keyword):
             frequency += 1
     assert frequency > 0
     return ({k: v / frequency for k, v in total_sentiment.items()}, frequency)
+
 
 def group_keyword_by_sentiment(entity):
     distinct_keywords = get_distinct_keywords(entity)
@@ -72,5 +78,5 @@ def group_keyword_by_sentiment(entity):
         "positive": sorted(positive, key=lambda x: (-x[2]["positive"], -x[1], x[0])),
         "neutral": sorted(neutral, key=lambda x: (-x[2]["neutral"], -x[1], x[0])),
         "negative": sorted(negative, key=lambda x: (-x[2]["negative"], -x[1], x[0])),
-        "mixed": sorted(mixed, key=lambda x: (-x[1], x[0]))
+        "mixed": sorted(mixed, key=lambda x: (-x[1], x[0])),
     }

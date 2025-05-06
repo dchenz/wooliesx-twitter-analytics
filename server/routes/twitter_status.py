@@ -1,8 +1,8 @@
 import json
-
+from .twitter_api import get_twitter_client, search_status_by_tags
 from flask import request
 from flask_api import status
-from .twitter_api import get_twitter_client, search_status_by_tags
+
 
 def twitter_status():
     tags = request.args.getlist("tags", type=str)
@@ -12,4 +12,3 @@ def twitter_status():
     api = get_twitter_client()
     statuses = search_status_by_tags(api, tags)
     return json.dumps(statuses)
-

@@ -23,16 +23,17 @@ locations = {
         "wa",
         "nt",
         "tas",
-        "act"
+        "act",
     ],
     "phraselist": [
         "down under",
         "new south wales",
         "northern territory",
         "western australia",
-        "south australia"
-    ]
+        "south australia",
+    ],
 }
+
 
 def is_australian_location(location):
     location = location.lower()
